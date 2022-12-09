@@ -1,0 +1,102 @@
+.cart {
+    padding: 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-flow: column;
+}
+
+.cartHeader {
+  font-size: 3rem;
+}
+
+.cartItems {
+  padding: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 40%;
+  list-style-type: none;
+}
+
+.cartItemsImg {
+  width: 15rem;
+  height: 16rem;
+}
+
+.cartItemsList {
+  display: flex;
+}
+
+.cartItem {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.cartItemsImgDiv {
+  padding: 0.5rem;
+}
+
+.cartItemDetails {
+    display: flex;
+    align-self: flex-end;
+    width: fit-content;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.right > * {
+    margin: 3px;
+}
+
+.removeButton {
+    color: black;
+    font-weight: bold;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+}
+
+.totalDiv {
+    flex:1;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.totalButton {
+  width: 30%;
+  font-weight: bold;
+  color: black;
+}
+
+.plusIcon, .minusIcon {
+    cursor: pointer;
+}
+
+.removeButton:hover, .totalButton:hover {
+    background: #ffad33 !important
+}
+
+.customerDetails {
+  display: flex;
+  flex-flow: column;
+  width: 20%;
+  margin-bottom: 10px;
+}
+
+input {
+  font-size: 20px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
