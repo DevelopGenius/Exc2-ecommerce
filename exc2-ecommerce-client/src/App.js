@@ -15,11 +15,14 @@ const App = () => {
 
   // Setting up all the products
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/")
+    fetch("http://127.0.0.1:3001/products")
       .then((res) => res.json())
-      .then((json) => setProducts(json));
+      .then((json) => setProducts(json.map(product => {
+        return { ...product, id: product._id }
+      })));
   }, []);
 
+console.log(products)
   const productToCartItem = (product) => {
     let item = {
       id: product.id,
