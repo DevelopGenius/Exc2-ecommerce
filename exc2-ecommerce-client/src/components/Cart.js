@@ -3,7 +3,7 @@ import cartModule from "../css/Cart.module.css";
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
 const Cart = (props) => {
-  const { cartItems } = props;
+  const { cartItems, orderCart } = props;
 
   return (
     <div className={cartModule.cart}>
@@ -78,7 +78,7 @@ const Cart = (props) => {
                     prefix={"$"}
                   />
                 </div>
-                <button className={cartModule.totalButton}>Send</button>
+                <button className={cartModule.totalButton} onClick={() => orderCart()}>Send</button>
               </div>
             </div>
           )}

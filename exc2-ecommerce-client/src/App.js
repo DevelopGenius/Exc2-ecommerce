@@ -22,7 +22,6 @@ const App = () => {
       })));
   }, []);
 
-console.log(products)
   const productToCartItem = (product) => {
     let item = {
       id: product.id,
@@ -124,6 +123,19 @@ console.log(products)
     setCartItems(cartItemsTemp);
   }
 
+  const orderCart = (name, address, phone) => {
+    fetch("http://127.0.0.1:3001/placeOrder",
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, address, phone, orderProducts: cartItems.map(cartItem => {
+            return { product: { _id: cartItem.id, }, amount: cartItem.count }
+          })
+        })
+      })
+  }
+
   return (
     <Router>
       <div className={appModule.gridContainer}>
@@ -144,7 +156,9 @@ console.log(products)
               <Cart cartItems={cartItems}
                 removeFromCart={removeFromCart}
                 removeOneFromCart={removeOneFromCart}
-                addOneToCart={addOneToCart} />
+                addOneToCart={addOneToCart}
+                orderCart={orderCart}
+                />
             }
             path="/cart"
           ></Route>
