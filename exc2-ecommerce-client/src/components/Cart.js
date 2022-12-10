@@ -1,9 +1,26 @@
 import CurrencyFormat from "react-currency-format";
 import cartModule from "../css/Cart.module.css";
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
+import { useState } from "react";
 
 const Cart = (props) => {
   const { cartItems, orderCart } = props;
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+
+  const getPhone = (event) => {
+    setPhone(event.target.value);
+    console.log(phone);
+  }
+
+  const getAddress = (event) => {
+    setAddress(event.target.value);
+  }
+
+  const getName = (event) => {
+    setName(event.target.value);
+  }
 
   return (
     <div className={cartModule.cart}>
@@ -62,9 +79,9 @@ const Cart = (props) => {
             <div>
               <div className={cartModule.customerDetails}>
                 <h2>Please fill out your details below:</h2>
-                <input placeholder="your name"></input>
-                <input placeholder="your phone"></input>
-                <input placeholder="your address"></input>
+                <input placeholder="your name" onChange={getName}></input>
+                <input placeholder="your phone" onChange={getPhone}></input>
+                <input placeholder="your address" onChange={getAddress}></input>
               </div>
               <div className={cartModule.total}>
                 <div className={cartModule.totalDiv}>
@@ -78,7 +95,7 @@ const Cart = (props) => {
                     prefix={"$"}
                   />
                 </div>
-                <button className={cartModule.totalButton} onClick={() => orderCart()}>Send</button>
+                <button className={cartModule.totalButton} onClick={() => orderCart(name, address, phone)}>Send</button>
               </div>
             </div>
           )}

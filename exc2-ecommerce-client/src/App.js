@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 // Notification
-import { ReactNotifications, Store } from 'react-notifications-component';
+import { ReactNotifications, Store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 
 const App = () => {
@@ -17,9 +17,13 @@ const App = () => {
   useEffect(() => {
     fetch("http://127.0.0.1:3001/products")
       .then((res) => res.json())
-      .then((json) => setProducts(json.map(product => {
-        return { ...product, id: product._id }
-      })));
+      .then((json) =>
+        setProducts(
+          json.map((product) => {
+            return { ...product, id: product._id };
+          })
+        )
+      );
   }, []);
 
   const productToCartItem = (product) => {
@@ -34,6 +38,23 @@ const App = () => {
 
     return item;
   };
+
+  // Notification for sending the order
+  const successCartNotification = () => {
+    Store.addNotification({
+      title: "Order sent",
+      message: "Successfully sent the order!",
+      type: "success",
+      insert: "bottom",
+      container: "bottom-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 2000,
+        onScreen: true,
+      },
+    });
+  }
 
   // Notification for adding an item
   const successNotification = (title) => {
@@ -64,10 +85,10 @@ const App = () => {
       animationOut: ["animate__animated", "animate__fadeOut"],
       dismiss: {
         duration: 2000,
-        onScreen: true
-      }
+        onScreen: true,
+      },
     });
-  }
+  };
 
   // Adding an item to the cart
   const addToCart = (product) => {
@@ -103,10 +124,10 @@ const App = () => {
       }
     });
 
-    setCartItems(prev => [...prev]);
-  }
+    setCartItems((prev) => [...prev]);
+  };
 
-  // Removing one item from the cart 
+  // Removing one item from the cart
   const removeOneFromCart = (item) => {
     let cartItemsTemp = cartItems.slice();
     let index = 0;
@@ -121,20 +142,24 @@ const App = () => {
       index++;
     });
     setCartItems(cartItemsTemp);
-  }
+  };
 
   const orderCart = (name, address, phone) => {
-    fetch("http://127.0.0.1:3001/placeOrder",
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name, address, phone, orderProducts: cartItems.map(cartItem => {
-            return { product: { _id: cartItem.id, }, amount: cartItem.count }
-          })
-        })
-      })
-  }
+    fetch("http://127.0.0.1:3001/placeOrder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        address,
+        phone,
+        orderProducts: cartItems.map((cartItem) => {
+          return { product: { _id: cartItem.id }, amount: cartItem.count };
+        }),
+      }),
+    }).then(() => successCartNotification());
+
+    successNotification()
+  };
 
   return (
     <Router>
@@ -153,12 +178,13 @@ const App = () => {
           ></Route>
           <Route
             element={
-              <Cart cartItems={cartItems}
+              <Cart
+                cartItems={cartItems}
                 removeFromCart={removeFromCart}
                 removeOneFromCart={removeOneFromCart}
                 addOneToCart={addOneToCart}
                 orderCart={orderCart}
-                />
+              />
             }
             path="/cart"
           ></Route>
